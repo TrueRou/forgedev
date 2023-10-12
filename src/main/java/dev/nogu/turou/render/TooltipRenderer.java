@@ -36,7 +36,7 @@ public class TooltipRenderer {
     public static void renderFinals(ItemStack itemStack, PoseStack pose, int x, int y, Font font, int width, int height, List<ClientTooltipComponent> components) {
         if (itemStack.getItem() instanceof SwordItem) {
             renderFancyBorder(x, y, width, height);
-            renderSwordCharacter(x, y, width, height);
+            renderSwordCharacter(x, y);
             return;
         }
         if (itemStack.getItem() instanceof ArmorItem) renderArmorItem(itemStack, x - 54, y + 16);
@@ -86,7 +86,7 @@ public class TooltipRenderer {
         guiGraphicsContext.fillGradient(x - 3, y + height + 2, x + width + 3, y + height + 3, 400, COLOR_FROM, COLOR_TO);
     }
 
-    private static void renderSwordCharacter(int x, int y, int width, int height) {
+    private static void renderSwordCharacter(int x, int y) {
         guiGraphicsContext.pose().pushPose();
         guiGraphicsContext.pose().translate(0, 0, 400);
         RenderSystem.enableBlend();
