@@ -1,9 +1,9 @@
-package dev.nogu.turou.render;
+package dev.nogu.turou.forgedev.render;
 
 import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import dev.nogu.turou.ForgeDev;
+import dev.nogu.turou.forgedev.ForgeDev;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -22,8 +22,6 @@ import java.util.List;
 
 public class TooltipRenderer {
     private static GuiGraphics guiGraphicsContext;
-    private static final int COLOR_FROM = 0x60500000;
-    private static final int COLOR_TO = -1602211792;
 
     public static void removeColors(RenderTooltipEvent.Color event) {
         // make the border and background transparent here so that we can redraw it later.
@@ -33,14 +31,13 @@ public class TooltipRenderer {
         event.setBackgroundEnd(0);
     }
 
-    public static void renderFinals(ItemStack itemStack, PoseStack pose, int x, int y, Font font, int width, int height, List<ClientTooltipComponent> components) {
-        if (itemStack.getItem() instanceof SwordItem) {
-            renderFancyBorder(x, y, width, height);
-            renderSwordCharacter(x, y);
-            return;
-        }
-        if (itemStack.getItem() instanceof ArmorItem) renderArmorItem(itemStack, x - 54, y + 16);
-        renderLinearBorder(x, y, width, height);
+    public static void tryRenderCharacter(ItemStack itemStack, int x, int y) {
+        if (itemStack.getItem() instanceof SwordItem) renderSwordCharacter(x, y);
+        else if (itemStack.getItem() instanceof ArmorItem) renderArmorItem(itemStack, x - 54, y + 16);
+    }
+
+    public static void tryRenderBorder(ItemStack itemStack, PoseStack pose, int x, int y, Font font, int width, int height, List<ClientTooltipComponent> components) {
+        if (itemStack.getItem() instanceof SwordItem) renderFancyBorder(x, y, width, height);
     }
 
     public static void setGuiGraphicsContext(GuiGraphics guiGraphics) {
@@ -77,13 +74,6 @@ public class TooltipRenderer {
             Lighting.setupFor3DItems();
         }
         guiGraphicsContext.pose().popPose();
-    }
-
-    private static void renderLinearBorder(int x, int y, int width, int height) {
-        guiGraphicsContext.fillGradient(x - 3, y - 3 + 1, x - 3 + 1, y + height + 3 - 1, 400, COLOR_FROM, COLOR_TO);
-        guiGraphicsContext.fillGradient(x + width + 2, y - 3 + 1, x + width + 3, y + height + 3 - 1, 400, COLOR_FROM, COLOR_TO);
-        guiGraphicsContext.fillGradient(x - 3, y - 3, x + width + 3, y - 3 + 1, 400, COLOR_FROM, COLOR_TO);
-        guiGraphicsContext.fillGradient(x - 3, y + height + 2, x + width + 3, y + height + 3, 400, COLOR_FROM, COLOR_TO);
     }
 
     private static void renderSwordCharacter(int x, int y) {

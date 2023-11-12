@@ -1,6 +1,6 @@
-package dev.nogu.turou;
+package dev.nogu.turou.forgedev;
 
-import dev.nogu.turou.render.TooltipRenderer;
+import dev.nogu.turou.forgedev.render.TooltipRenderer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderTooltipEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -12,6 +12,7 @@ public class ClientEventHandler {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void colorTooltip(RenderTooltipEvent.Color event) {
         TooltipRenderer.removeColors(event);
+        TooltipRenderer.tryRenderCharacter(event.getItemStack(), event.getX(), event.getY());
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)

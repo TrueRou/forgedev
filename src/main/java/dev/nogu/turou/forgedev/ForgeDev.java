@@ -1,4 +1,4 @@
-package dev.nogu.turou;
+package dev.nogu.turou.forgedev;
 
 import net.minecraftforge.fml.common.Mod;
 
